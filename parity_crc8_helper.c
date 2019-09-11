@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
+
+# define BITS_IN_BYTE 8
 typedef unsigned char u8; //typedef u8
 
 // function pointer definition of the crc_x where x is 16, 32, etc.
@@ -49,7 +51,7 @@ u8 compute_c8_one_byte(u8 data){
     u8 crc = data;
     
     // from msb
-    for (int i = 0; i < sizeof(data); i++){
+    for (int i = 0; i < sizeof(data)*BITS_IN_BYTE; i++){
         // if msb = 1
         if ((crc & 0x80) != 0){
             crc = (crc << 1) ^ generator;
