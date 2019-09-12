@@ -42,7 +42,10 @@ void print_poly(u16 value){
             printf("1");
         }
         else if (i == 0 && bits == 0){
-            printf("1");
+            printf("\b\b\b  ");
+        }
+        else if (i == 1 && bits == 1){
+            printf("x + ");
         }
         else if (bits == 1){
             printf("x^%d + ", i);
@@ -75,10 +78,12 @@ print_bits_reverse (u16 n, int len)
 // computer crc for a frame
 u8 compute_c8(u8 *data, int len){
     u8 crc = 0;
+    printf("generator --- 0x%x\n", __GENERATOR__);
     for (int i = 0; i < len; i++){
         crc ^= data[i];
         crc = compute_c8_one_byte(crc);
-        printf("data = 0x%x \t CRC = 0x%x\n", data[i], crc);
+
+        printf("\n\n\ndata = 0x%x \t CRC = 0x%x\n\n\n", data[i], crc);
     }
 
     return crc;
@@ -101,6 +106,8 @@ u8 compute_c8_one_byte(u8 data){
         else{
             crc <<= 1;
         }
+        printf("left shifted in hex = 0x%x \t", crc);
+        print_bits_reverse(crc, sizeof(crc)*__BITS_IN_BYTE__);
     }
     return crc;
     
@@ -124,7 +131,7 @@ print_bytes (unsigned char *byte, int len)
 int main()
 {
    
-    u16 value = 0x0201;
+    u16 value = 0b11000010;//0b1000101100110001; //0b11000010; 0x1234; 12345//0x0102
     packet_t frame;
     frame.data = value;
     printf("\n\n\n\n\n----------- CRC Implementation ----------- \n\n\n\n");
