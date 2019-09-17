@@ -46,7 +46,7 @@ void UART_transmit(unsigned char byte){
 
 
     SBUF = byte;
-    while(TI == 1);
+    while(TI == 0);
     TI = 0;
 }
 
